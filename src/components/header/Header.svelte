@@ -1,5 +1,5 @@
-<script>
-	export let name = 'User';
+<script lang="ts">
+  export let name: string = 'User';
 </script>
 
 <div class="header">{name}'s TodoList</div>

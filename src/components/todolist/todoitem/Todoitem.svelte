@@ -1,12 +1,14 @@
-<script>
-  export let item;
-  export let handleRemove;
-  export let handleUpdate;
-  export let handleToggle;
+<script lang="ts">
+  import { Todo } from '../../../interfaces/Todo';
 
-  let isEditMode = false;
-  let inputField;
-  let inputValue = '';
+  export let item: Todo;
+  export let handleRemove: (id: string) => void;
+  export let handleUpdate: (id: string, value: string) => void;
+  export let handleToggle: (id: string) => void;
+
+  let isEditMode: boolean = false;
+  let inputField: any;
+  let inputValue: string = '';
 
   const enableEditMode = () => {
     isEditMode = true;

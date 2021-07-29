@@ -1,10 +1,11 @@
-<script>
+<script lang="ts">
+  import { Todo } from '../../interfaces/Todo';
   import Todoitem from './todoitem/Todoitem.svelte';
 
-  export let list;
-  export let handleRemove;
-  export let handleUpdate;
-  export let handleToggle;
+  export let list: Todo[];
+  export let handleRemove: (id: string) => void;
+  export let handleUpdate: (id: string, value: string) => void;
+  export let handleToggle: (id: string) => void;
 </script>
 
 <div class="wrapper">

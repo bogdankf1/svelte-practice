@@ -1,11 +1,12 @@
-<script>
+<script lang="ts">
   import { FILTER_OPTIONS } from '../../constants/filterOptions';
+  import { FilterOption } from '../../interfaces/FilterOption';
 
-  export let activeItemsCount = 0;
-  export let isClearCompletedShown = false;
-  export let filterMode;
-  export let handleSetFilterMode;
-  export let handleClearCompleted;
+  export let activeItemsCount: number = 0;
+  export let isClearCompletedShown: boolean = false;
+  export let filterMode: FilterOption;
+  export let handleSetFilterMode: (option: FilterOption) => void;
+  export let handleClearCompleted: () => void;
 </script>
 
 <div class="wrapper">

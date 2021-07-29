@@ -1,13 +1,14 @@
-<script>
+<script lang="ts">
   import { v4 as uuidv4 } from 'uuid';
+  import { Todo } from '../../interfaces/Todo';
 
-  export let handleSubmit;
-  export let handleToggleAll;
+  export let handleSubmit: (item: Todo) => void;
+  export let handleToggleAll: () => void;
 
-  let value = '';
-  let inputField;
+  let value: string = '';
+  let inputField: any;
 
-  const getPreparedTodo = (title) => {
+  const getPreparedTodo = (title: string): Todo => {
     return {
       title,
       isCompleted: false,
