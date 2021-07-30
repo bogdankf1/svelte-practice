@@ -6,52 +6,60 @@
   import { FILTER_MODES, FILTER_OPTIONS } from '../../constants/filterOptions';
   import { FilterOption } from '../../interfaces/FilterOption';
   import { Todo } from '../../interfaces/Todo';
+  import { list } from '../../stores/list';
 
   let todos: Todo[] = [];
+  list.subscribe((value) => (todos = value.todos));
   let displayingTodos: Todo[] = [];
   let filterMode = FILTER_OPTIONS[0];
   let isClearCompletedShown: boolean;
   let activeItemsCount: number = 0;
 
   const addTodo = (item: Todo) => {
-    todos = [...todos, item];
+    list.update(({ todos }) => ({ todos: [...todos, item] }));
   };
   const removeTodo = (id: string) => {
-    todos = todos.filter((todo) => todo.id !== id);
+    list.update(({ todos }) => ({ todos: todos.filter((todo: Todo) => todo.id !== id) }));
   };
   const updateTodo = (id: string, value: string) => {
-    todos = todos.map((todo) => {
-      if (todo.id === id) {
-        return {
-          ...todo,
-          title: value,
-        };
-      }
-      return todo;
-    });
+    list.update(({ todos }) => ({
+      todos: todos.map((todo: Todo) => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            title: value,
+          };
+        }
+        return todo;
+      }),
+    }));
   };
   const toggleTodo = (id: string) => {
-    todos = todos.map((todo) => {
-      if (todo.id === id) {
-        return {
-          ...todo,
-          isCompleted: !todo.isCompleted,
-        };
-      }
-      return todo;
-    });
+    list.update(({ todos }) => ({
+      todos: todos.map((todo: Todo) => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            isCompleted: !todo.isCompleted,
+          };
+        }
+        return todo;
+      }),
+    }));
   };
   const toggleAll = () => {
     const isEveryCompleted = todos.every((todo) => todo.isCompleted);
-    todos = todos.map((todo) => {
-      return {
-        ...todo,
-        isCompleted: !isEveryCompleted,
-      };
-    });
+    list.update(({ todos }) => ({
+      todos: todos.map((todo: Todo) => {
+        return {
+          ...todo,
+          isCompleted: !isEveryCompleted,
+        };
+      }),
+    }));
   };
   const clearCompleted = () => {
-    todos = todos.filter((todo) => !todo.isCompleted);
+    list.update(({ todos }) => ({ todos: todos.filter((todo: Todo) => !todo.isCompleted) }));
   };
   const setFilterMode = (mode: FilterOption) => {
     filterMode = mode;
