@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { onDestroy, onMount } from 'svelte';
+  import { Unsubscriber } from 'svelte/store';
   import FiltersPanel from '../../components/filtersPanel/FiltersPanel.svelte';
   import Header from '../../components/header/Header.svelte';
   import SearchField from '../../components/searchField/SearchField.svelte';
@@ -9,7 +11,14 @@
   import { list } from '../../stores/list';
 
   let todos: Todo[] = [];
-  list.subscribe((value) => (todos = value.todos));
+  let unsubscribe: Unsubscriber;
+
+  onMount(() => {
+    unsubscribe = list.subscribe((value) => (todos = value.todos));
+  });
+
+  onDestroy(unsubscribe);
+
   let displayingTodos: Todo[] = [];
   let filterMode = FILTER_OPTIONS[0];
   let isClearCompletedShown: boolean;
